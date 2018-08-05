@@ -19,9 +19,6 @@ typedef boost::adjacency_list<
   boost::directedS
   > Graph;
 
-typedef typename graph_traits<Graph>
-      ::vertex_descriptor Vertex;
-
 std::vector<int> adj;
 int counter = 0;
 bool cycle = false;
