@@ -1,28 +1,41 @@
+/*
+	COL 719 Assignment 1
+	Author - Shreshth Tuli
+
+	Determine if a circuit is combinational or sequential
+*/
+
 #include <iostream>
 #include <vector>
 #include <fstream>
+#include <deque>
 
 #include <boost/graph/adjacency_list.hpp>
-#include <boost/graph/breadth_first_search.hpp>
+#include <boost/graph/topological_sort.hpp>
+
+using namespace boost;
 
 typedef boost::adjacency_list<
   boost::listS, boost::vecS,
   boost::directedS
   > Graph;
 
-using namespace boost;
+typedef boost::graph_traits<Graph>::vertex_descriptor vertex_t;
 
-bool cycle(Graph &G, int u, int v){
+std::deque<vertex_t> topologicalSorted;
 
-  std::vector<int> distances(num_vertices(G), 0);
+void topologicalSort(Graph &graph)
+{
+    try{
+        boost::topological_sort(graph, front_inserter(topologicalSorted));
+    }
+    catch (boost::not_a_dag){
+        std::cout << "Sequential Circuit\n";
+        return;
+    }
 
-  breadth_first_search(G, vertex(u, G),
-               visitor(make_bfs_visitor(record_distances(&distances[0], on_tree_edge())))); 
-
-  if(distances[v] != 0)
-    return true;
-  return false;
-};
+    std::cout << "Combinational Circuit\n";
+} 
 
 int main(){
 
@@ -33,15 +46,10 @@ int main(){
 
 	Graph g;
 
-	while(infile >> a >> b){
-		//std::cout << "Edge : " << a << "," << b << std::endl;
-		if(num_vertices(g) > 1 && cycle(g, a, b)){
-			std::cout << "Sequential circuit";
-			return 0;
-		}
+	while(infile >> a >> b)
 		boost::add_edge(a, b, g);
-	}
 
-	std::cout << "Combinational Circuit";
+	topologicalSort(g);
+
 	return 0;
 };
