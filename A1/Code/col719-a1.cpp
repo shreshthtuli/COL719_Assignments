@@ -8,7 +8,6 @@
 #include <iostream>
 #include <vector>
 #include <fstream>
-#include <vector>
 
 #include <boost/graph/adjacency_list.hpp>
 
@@ -44,12 +43,18 @@ void dfs(Graph &graph, int v, int arrival[], int departure[])
 	departure[v-1] = counter++;      
 } 
 
-int main(){
+int main(int argc, char** argv){
+	
+	std::ifstream infile(argv[1]);
 
-	std::ifstream infile("input.txt");
 	int a, b, n;
 
 	infile >> n;
+
+	if(n==0){
+		std::cout << "Combinational Circuit"; 
+		return 0;
+	}
 
 	Graph g;
 
