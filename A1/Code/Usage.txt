@@ -1,0 +1,7 @@
+To compile the code run the following command on terminal:
+	g++ -I <boost library path> .\col719-a1.cpp -o COL719-A1
+For example in Windows:
+	g++ -I 'C:\Program Files\boost\boost_1_67_0' .\col719-a1.cpp -o COL719-A1
+
+To specify input file run:
+	.\COL719-A1 .\Testcases\<filename>
