@@ -30,7 +30,7 @@ void topologicalSort(Graph &graph)
         cout << "Sequential Circuit\n"; return;
     }
 
-    std::cout << "Combinational Circuit\n";
+    cout << "Combinational Circuit\n";
 } 
 
 int main(int argc, char** argv){
